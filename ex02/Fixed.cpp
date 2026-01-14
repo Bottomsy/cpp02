@@ -59,10 +59,9 @@ bool Fixed::operator!=(const Fixed &other)
 {
     return (integer != other.integer);
 }
-Fixed& Fixed::operator+(const Fixed &other)
+Fixed Fixed::operator+(const Fixed &other)
 {
-    integer += other.integer;
-    return *this;
+    return (Fixed(toFloat() + other.toFloat()));
 }
 Fixed& Fixed::operator++()
 {
@@ -75,32 +74,28 @@ Fixed Fixed::operator++(int)
     integer++;
     return temp;
 }
-Fixed& Fixed::operator-(const Fixed &other)
+Fixed Fixed::operator-(const Fixed &other)
 {
-    integer -= other.integer;
-    return *this;
+    return Fixed(toFloat() - other.toFloat());
 }
 Fixed& Fixed::operator--()
 {
     integer--;
     return *this;
 }
-Fixed& Fixed::operator--(int)
+Fixed Fixed::operator--(int)
 {
-    integer++;
-    return *this;
+    Fixed temp(*this);
+    integer--;
+    return temp;
 }
 Fixed Fixed::operator*(const Fixed &other)
 {
-    Fixed res;
-    res = integer * other.integer;
-    res.integer >> fraction;
-    return res;
+   return Fixed(toFloat() * other.toFloat());
 }
-Fixed& Fixed::operator/(const Fixed &other)
+Fixed Fixed::operator/(const Fixed &other)
 {
-    integer /= other.integer;
-    return *this;
+    return Fixed(toFloat() / other.toFloat());
 }
     
 std::ostream& operator<<(std::ostream &stream, const Fixed &obj)
@@ -130,24 +125,30 @@ float Fixed::toFloat( void ) const
     return (float)integer / (1 << fraction);
 }
 
-// static Fixed& min(Fixed &a, Fixed &b)
-// {
-//     if(a < b)
-//         return a;
-//     return b;
-// }
-// static Fixed& min(const Fixed &a, const Fixed &b)
-// {
-//     if(a.)
-// }
-// static Fixed& max(Fixed &a, Fixed &b)
-// {
-
-// }
-// static Fixed& max(const Fixed &a, const Fixed &b)
-// {
-
-// }
+Fixed& Fixed::min(Fixed &a, Fixed &b)
+{
+    if(a.integer < b.integer)
+        return a;
+    return b;
+}
+Fixed const& Fixed::min(const Fixed &a, const Fixed &b)
+{
+    if(a.integer < b.integer)
+        return a;
+    return b;
+}
+Fixed& Fixed::max(Fixed &a, Fixed &b)
+{
+    if(a.integer > b.integer)
+        return a;
+    return b;
+}
+Fixed const& Fixed::max(const Fixed &a, const Fixed &b)
+{
+    if(a.integer > b.integer)
+        return a;
+    return b;
+}
 
 Fixed::~Fixed()
 {
