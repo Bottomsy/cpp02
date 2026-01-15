@@ -1,6 +1,6 @@
 #include "Fixed.hpp"
 
-const int Fixed::fraction = 0;
+const int Fixed::fraction = 8;
 
 Fixed::Fixed()
 {
@@ -10,7 +10,6 @@ Fixed::Fixed()
 Fixed::Fixed(const Fixed & other)
 {
     std::cout << "Copy constructor called\n";
-    this->value = other.getRawBits();
     *this = other;
 }
 

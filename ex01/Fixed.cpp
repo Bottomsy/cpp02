@@ -10,7 +10,6 @@ Fixed::Fixed()
 Fixed::Fixed(const Fixed & other)
 {
     std::cout << "Copy constructor called\n";
-    this->integer = other.integer;
     *this = other;
 }
 
